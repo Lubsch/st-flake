@@ -1,0 +1,24 @@
+--- a/x.c	2022-08-10 21:24:04.265177284 +0200
++++ b/x.c	2022-08-12 03:15:25.966533955 +0200
+@@ -1520,6 +1520,7 @@
+ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+ {
+ 	Color drawcol;
++	XRenderColor colbg;
+ 
+ 	/* remove the old cursor */
+ 	if (selected(ox, oy))
+@@ -1549,10 +1550,11 @@
+ 			g.fg = defaultfg;
+ 			g.bg = defaultrcs;
+ 		} else {
++			/** this is the main part of the dynamic cursor color patch */
++			g.bg = g.fg;
+ 			g.fg = defaultbg;
+-			g.bg = defaultcs;
+ 		}
+-		drawcol = dc.col[g.bg];
++        drawcol = dc.col[g.bg];
+ 	}
+ 
+ 	/* draw the new one */
